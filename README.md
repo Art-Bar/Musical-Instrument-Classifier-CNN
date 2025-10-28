@@ -1,4 +1,4 @@
-"# Musical-Instrument-Classifier-CNN" 
+**Musical-Instrument-Classifier-CNN** 
 
 [Opis zbioru danych](docs/About_Dataset.md)
 
