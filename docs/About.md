@@ -1,4 +1,5 @@
 W tym repozytorium zaprezentowano 2 podejścia do problemu tworzenia sieci neuronowej. Pierwszym z nich jest utworzenie autorskiej sieci neuronowej o prostej architekturze:
+
 ![alt text](image-1.png)
 
 która zawiera 10 warstw i 3,305,096 parametrów.
