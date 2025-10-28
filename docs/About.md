@@ -1,34 +1,50 @@
-W tym repozytorium zaprezentowano 2 podejścia do problemu tworzenia sieci neuronowej. Pierwszym z nich jest utworzenie własnej sieci neuronowej.
-To podejście rozbito na dwie próby. Pierwsza z nich jest oparta na prostej architekturze sieci neuronowej.
-![alt text](image-1.png)
+# Podejścia do tworzenia sieci neuronowej
 
-która zawiera 10 warstw i 3,305,096 parametrów.
-Model trenowano przez 20 epok.
+W tym repozytorium zaprezentowano **dwa podejścia** do problemu tworzenia sieci neuronowej.
 
-Druga została oparta na bardziej złożonej architekturze.
-![alt text](image-9.png)
+---
 
-Ma ona więcej warstw części konwolucyjnej, która służy do ekstrakcji cech, oraz używa warstwy GlobalAveragePooling2D() zamiast Flatten() przez co warstwy w pełni połączone (FC) mają mniej parametrów.
-Warstwa GlobalAveragePooling2D() dla każdej mapy cech (każdego kanału wyjścia warstwy konwolucyjnej) pobiera średnią wartość i tworzy wektor o długości batch_size * channels.
-Warstwa Flatten() pobiera wszystkie wartości z każdej mapy cech tworząc wektor o długości batch_size * height * width * channels.
+## 1. Tworzenie własnej sieci neuronowej
 
-Dzięki zastosowaniu warstwy GlobalAveragePooling2D() złożona architektura modelu zawiera 1,243,368 parametrów.
+To podejście rozbito na dwie próby:
 
-Kształt danych wejściowych obydwu modeli oparto na kształcie spektrogramów przez co przyjmuje on jednokanałowy obraz (dwuwymiarową tablicę wartości).
+### 1.1 Prosta architektura
+Sieć zawiera **10 warstw** i **3,305,096 parametrów**. Model trenowano przez **20 epok**.
 
-Drugim z nich było dostrojenie istniejącej konwolucyjnej sieci neuronowej wytrenowanej do klasyfikacji obrazów o nazwie VGG19 opracowanej przez zespół z Visual Geometry Group (VGG) na Uniwersytecie Oksfordzkim.
+![Prosta architektura](image-1.png)
 
-Model został opublikowany w artykule z 2014 roku: “Very Deep Convolutional Networks for Large-Scale Image Recognition” (ICLR 2015).
+### 1.2 Złożona architektura
 
-Architektura sieci VGG19 (część konwolucyjna, tzw. "feature extractor"):
-![alt text](image-2.png)
+Posiada więcej warstw części konwolucyjnej, która służy do **ekstrakcji cech**. Zastosowano warstwę **GlobalAveragePooling2D()** zamiast **Flatten()**, co zmniejsza liczbę parametrów w warstwach w pełni połączonych (FC).
 
-Liczba parametrów tej sieci (bez warstw klasfikacyjnych) wynosi 20,024,384.
+#### Różnica między warstwami:
+**GlobalAveragePooling2D()**: dla każdej mapy cech (kanału wyjścia warstwy konwolucyjnej) pobiera średnią wartość, tworząc wektor o długości `batch_size * channels`.
+**Flatten()**: pobiera wszystkie wartości z każdej mapy cech, tworząc wektor o długości `batch_size * height * width * channels`.
 
-Została ona wytrenowana na zbiorze ImageNet zawierającym 1000 klas oraz 1.2 miliona próbek.
+Dzięki zastosowaniu **GlobalAveragePooling2D()**, złożona architektura modelu zawiera **1,243,368 parametrów**.
 
-W ramach dostrajania stworzono nową sieć dodając do częsći konwolucyjnej VGG19 warstwy FC pełniące role klasyfikatora.
+![Złożona architektura](image-9.png)
 
-Następnie przez 10 epok uczono taki model. Po czym odmrożono ostatnie 8 warstw modelu i wznowiono trenowanie modelu na następne 10 epok.
+Kształt danych wejściowych obu modeli oparto na kształcie spektrogramów – sieci przyjmują **jednokanałowy obraz** (dwuwymiarową tablicę wartości).
 
-Model na wejściu przyjmuje trójkanałowy obraz (Kanały R, G oraz B) przez co przed trenowaniem potrzebne było przekształcenie danych wejściowych duplikując spektrogram dla każdego kanału. Zwiększona ilość danych wejściowych znacznie wydłużyła czas trenowania modelu.
+---
+
+## 2. Dostrojenie istniejącej sieci VGG19
+
+Drugim podejściem było **dostrojenie istniejącej konwolucyjnej sieci neuronowej VGG19**, wytrenowanej do klasyfikacji obrazów. Opracowana przez zespół **Visual Geometry Group (VGG)** na Uniwersytecie Oksfordzkim. Opublikowana w artykule: *“Very Deep Convolutional Networks for Large-Scale Image Recognition”* (ICLR 2015).
+
+### Architektura sieci VGG19
+**Część konwolucyjna (feature extractor):**
+
+![VGG19 feature extractor](image-2.png)
+
+Liczba parametrów (bez warstw klasyfikacyjnych): **20,024,384**. Wytrenowana na zbiorze **ImageNet** z **1000 klasami** i **1.2 miliona próbek**.
+
+### Proces dostrajania
+
+1. Dodano do części konwolucyjnej VGG19 **warstwy FC pełniące rolę klasyfikatora**.
+2. Trenowano model przez **10 epok**.
+3. Odmrożono ostatnie **8 warstw** i wznowiono trenowanie na kolejne **10 epok**.
+
+Model na wejściu przyjmuje **trójkanałowy obraz (R, G, B)**, dlatego spektrogramy zostały zdublowane na każdy kanał.  
+Zwiększona ilość danych wejściowych znacznie wydłużyła czas trenowania modelu.

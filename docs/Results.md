@@ -1,57 +1,78 @@
-Wyniki zostały opracowane na zmniejszonym zbiorze danych (1000 próbek ze zbioru treningowego, 500 próbek ze zbioru walidacyjnego oraz 500 próbek ze zbioru testowego).
+# Wyniki eksperymentów
 
-Prosty model CNN:
+Wyniki zostały opracowane na **zmniejszonym zbiorze danych**:
 
-![alt text](image-3.png)
+- **1000 próbek** ze zbioru treningowego  
+- **500 próbek** ze zbioru walidacyjnego  
+- **500 próbek** ze zbioru testowego
 
-Evaluation Metrics:
-Accuracy:    0.7380
-Sensitivity: 0.6620
-Precision:   0.6409
-F1-Score:    0.6165
+---
 
-![alt text](image-4.png)
+## 1. Prosty model CNN
 
-Złożony model CNN:
+![Prosty model CNN](image-3.png)
 
-![alt text](image-10.png)
+**Evaluation Metrics:**
 
-Evaluation Metrics:
-Accuracy:    0.6840
-Sensitivity: 0.5983
-Precision:   0.5699
-F1-Score:    0.5287
+- Accuracy:    0.7380  
+- Sensitivity: 0.6620  
+- Precision:   0.6409  
+- F1-Score:    0.6165
 
-![alt text](image-11.png)
+![Prosty model CNN - wykres](image-4.png)
 
-Dostrojony Model VGG19:
+---
 
-Pierwsza faza (wszystkie warstwy części konwolucyjnej zamrożone):
+## 2. Złożony model CNN
 
-![alt text](image-5.png)
+![Złożony model CNN](image-10.png)
 
-Evaluation Metrics:
-Accuracy:    0.4020
-Sensitivity: 0.2125
-Precision:   0.2253
-F1-Score:    0.1405
+**Evaluation Metrics:**
 
-![alt text](image-6.png)
+- Accuracy:    0.6840  
+- Sensitivity: 0.5983  
+- Precision:   0.5699  
+- F1-Score:    0.5287
 
-Druga faza (odmrożone ostatnie 8 warstw części konwolucyjnej):
+![Złożony model CNN - wykres](image-11.png)
 
-![alt text](image-7.png)
+---
 
-Evaluation Metrics:
-Accuracy:    0.6400
-Sensitivity: 0.5979
-Precision:   0.6460
-F1-Score:    0.5463
+## 3. Dostrojony model VGG19
 
-![alt text](image-8.png)
+### 3.1 Pierwsza faza  
+*(wszystkie warstwy części konwolucyjnej zamrożone)*
 
+![VGG19 - pierwsza faza](image-5.png)
 
-Uwagi i Spostrzeżenia:
+**Evaluation Metrics:**
 
-Powyższe wyniki otrzymano korzystając z podziału danych narzuconego przez twórców zbioru Medley-Solos-DB.
-Gdy ustalono własny podział danych treningowych, testowych oraz walidacyjnych modele miały znacznie wyższą dokładność. Dzieje się tak prawdopodobnie dlatego, że w podziale narzuconym przez twórców zbiory pochodzą z różnych źródeł, przez co model może klasyfikować próbki wyłącznie po brzmieniu instrumentu, w naszym podziale dane zostały wymieszane, przez co w niektórych przypadkach model może klasyfikować próbki po innych czynnikach, m.in. warunkach nagrania.
+- Accuracy:    0.4020  
+- Sensitivity: 0.2125  
+- Precision:   0.2253  
+- F1-Score:    0.1405
+
+![VGG19 - pierwsza faza wykres](image-6.png)
+
+### 3.2 Druga faza  
+*(odmrożone ostatnie 8 warstw części konwolucyjnej)*
+
+![VGG19 - druga faza](image-7.png)
+
+**Evaluation Metrics:**
+
+- Accuracy:    0.6400  
+- Sensitivity: 0.5979  
+- Precision:   0.6460  
+- F1-Score:    0.5463
+
+![VGG19 - druga faza wykres](image-8.png)
+
+---
+
+## Uwagi i spostrzeżenia
+
+- Uzyskane wyniki opierają się na podziale danych ustalonym przez twórców zbioru Medley-Solos-DB. 
+- Powyższe wyniki uzyskano trenując sieci na zmniejszonym zbiorze danych zawierającym 2000 próbek. Próbki w podzbiorach treningowym, testowym i walidacyjnym pochodziły z odpowiadających im sekcji oryginalnego zbioru, choć proporcje liczebności tych podzbiorów nieco się różnią.
+- Gdy ustalono **własny podział danych treningowych, testowych oraz walidacyjnych**, modele osiągały **znacznie wyższą dokładność**. Różnica wynika prawdopodobnie z faktu, że w podziale narzuconym przez twórców zbiory pochodzą z **różnych źródeł**, więc model jest zmuszony klasyfikować próbki wyłącznie po brzmieniu instrumentu.  
+
