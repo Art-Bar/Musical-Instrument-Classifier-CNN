@@ -12,6 +12,17 @@ F1-Score:    0.6165
 
 ![alt text](image-4.png)
 
+Złożony model CNN:
+
+![alt text](image-10.png)
+
+Evaluation Metrics:
+Accuracy:    0.6840
+Sensitivity: 0.5983
+Precision:   0.5699
+F1-Score:    0.5287
+
+![alt text](image-11.png)
 
 Dostrojony Model VGG19:
 
